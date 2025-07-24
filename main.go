@@ -85,12 +85,15 @@ func main() {
 		return
 	}
 
-	// For demonstration, print the first 500 characters of the body.
-	// In a real crawler, you'd parse this HTML.
-	fmt.Println("Successfully fetched URL content (first 500 chars):")
-	if len(body) > 500 {
-		fmt.Println(string(body[:500]))
-	} else {
-		fmt.Println(string(body))
+	links, err := extractLinks(body, targetURL)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error extracting Links: %v\n", err)
+		return
 	}
+
+	fmt.Println("\nFound Links:")
+	for _, link := range links {
+		fmt.Println(link)
+	}
+
 }
